@@ -1,0 +1,37 @@
+---
+# tasks file for httpdrole
+- name: Installing httpd service
+  yum:
+    name: httpd
+    state: latest
+
+- name: Starting httpd service
+  service:
+    name: httpd
+    state: started
+
+- name: Adding 80/tcp port in firewalld
+  firewalld:
+    port: 80/tcp
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: Adding httpd service in firewalld
+  firewalld:
+    service: http
+    permanent: true
+    immediate: true
+    state: enabled
+  notify: httpd_restart
+
+- name: Adding source code in html folder
+  copy:
+    content: "Hello this is Dhanraj Ranvirkar"
+    dest: /var/www/html/index.html 
+
+- name: Adding custom config httpd file
+  template:
+    src: custom.j2
+    dest: /etc/httpd/conf.d/custom.conf
+  notify: httpd_restart

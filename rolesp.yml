@@ -1,0 +1,7 @@
+---
+- name: roles practice
+  hosts: all
+  user: root
+  become: yes
+  roles:
+  - httpdrole 

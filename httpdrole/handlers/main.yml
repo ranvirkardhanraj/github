@@ -1,0 +1,6 @@
+---
+# handlers file for httpdrole
+- name: httpd_restart
+  service:
+    name: httpd
+    state: reloaded
